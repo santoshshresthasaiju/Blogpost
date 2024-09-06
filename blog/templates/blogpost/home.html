@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
 {% block home %}
-<h1>welcome to the blog App</h1> 
+<div>
+    <h1 class="text-center justify-content-center p-4">Share your voice and vision through a blog that is uniquely yours.</h1>
+    <h4 class="text-center justify-content-between"> Build it with ease and let the world discover your story.</h4> 
+    <div>
+        <button class="bg-"> <a href="{% url 'blogpost:post_create' %}">CREATE YOUR BLOG</a></button>
+    </div>
+</div>
+
 {% endblock home %}

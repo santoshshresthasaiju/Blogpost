@@ -2,27 +2,65 @@
 
 {% block blogpost %}
 <div class="container mt-4">
-    <div class="row">
-        {% for post in posts %}
-            <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <a href="{% url 'blogpost:post_detail' post.pk %}" class="text-decoration-none text-dark">
-                            <h5 class="card-title">{{ post.title }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">By {{ post.author.username }} | {{ post.timestamp|date:"F j, Y, g:i a" }}</h6>
-                            <p class="card-text">{{ post.content|truncatewords:30 }}</p>
-                            <a href="{% url 'blogpost:post_detail' post.pk %}" class="btn btn-primary">Read More</a>
+    <h2 class="text-center">Blog Posts</h2>
+
+    <!-- Post List -->
+    {% if posts %}
+        <div class="row">
+            {% for post in posts %}
+                <div class="col-md-12 mb-4">
+                    <h3>{{ post.title }}</h3>
+                    <p>By {{ post.author.username }} | {{ post.timestamp|date:"F j, Y, g:i a" }}</p>
+                    <p>{{ post.content|truncatewords:30 }}</p>
+                    <a href="{% url 'blogpost:post_detail' post.pk %}" class="btn btn-primary">Read More</a>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination Controls -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if posts.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
                         </a>
-                    </div>
-                </div>
-            </div>
-        {% empty %}
-            <div class="col-12">
-                <div class="alert alert-info" role="alert">
-                    No posts available.
-                </div>
-            </div>
-        {% endfor %}
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">&laquo;</span>
+                    </li>
+                {% endif %}
+
+                {% for num in posts.paginator.page_range %}
+                    {% if posts.number == num %}
+                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if posts.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">&raquo;</span>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+
+    {% else %}
+        <p>No posts available.</p>
+    {% endif %}
+
+    <div>
+        <a  href="{% url 'blogpost:post_create' %}">Create Post</a>
     </div>
 </div>
+
 {% endblock blogpost %}

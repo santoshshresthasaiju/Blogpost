@@ -12,6 +12,8 @@
     <h1>{{ post.title }}</h1>
     <p>{{ post.content }}</p>
     <p>Author: {{ post.author }}</p>
+    <a href="{% url 'blogpost:post_update' post.id %}">Update</a>
+    <a href="{% url 'blogpost:post_delete' post.id %}">Delete</a>
 
     <hr>
 
