@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'accounts',
     'crispy_forms',
     'crispy_bootstrap5',
+    'blogpost',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -123,6 +124,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+LOGIN_URL = 'login'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 

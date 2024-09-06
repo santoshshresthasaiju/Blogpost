@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block blogpost %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>
+    <p>Author: {{ post.author }}</p>
+
+    <hr>
+
+    <h2>Comments</h2>
+
+    <ul>
+        {% for comment in comments %}
+            <li>
+                <p>{{ comment.content }}</p>
+                <p>By: {{ comment.author }} on {{ comment.timestamp }}</p>
+
+                <!-- Allow deletion only if the logged-in user is the comment author -->
+                {% if comment.author == request.user %}
+                    <form action="{% url 'blogpost:delete_comment' comment.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>No comments yet.</li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+
+    <h2>Add a Comment</h2>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit">Add Comment</button>
+    </form>
+
+</body>
+</html>
+
+{% endblock blogpost %}
