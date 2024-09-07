@@ -3,6 +3,7 @@ from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
 
 @login_required
 def home(request):
@@ -10,10 +11,21 @@ def home(request):
 
 @login_required
 def post_list(request):
-    #fetch all posts from database
-    post_list = Post.objects.filter(author=request.user)
+    query = request.GET.get('q', '')
+    if request.user.is_authenticated:      
+        if query:
+            posts = Post.objects.filter(
+                Q(title__icontains=query) | Q(content__icontains=query), 
+                author=request.user
+            )
+        else:
+            
+        #fetch data by using filter for according to user posts from database
+            posts = Post.objects.filter(author=request.user)
+    else:
+        posts =Post.objects.none()
     #using pagination
-    paginator = Paginator(post_list, 2)
+    paginator = Paginator(posts, 2)
     page_number = request.GET.get('page')
     try:
         posts =paginator.page(page_number)
@@ -22,7 +34,7 @@ def post_list(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
         
-    return render(request, 'blogpost/post_list.html', {'posts':posts})
+    return render(request, 'blogpost/post_list.html', {'posts':posts, 'query':query})
 
 @login_required
 def post_create(request):
