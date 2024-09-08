@@ -1,8 +1,13 @@
 myenv
+__pychache__
 __pychache__/
 *.pyc
 *.pyo
 db.sqlite3
 .env
 staticfiles/
-media/
+
+
+*.log
+*.pot
+*.migrations/
