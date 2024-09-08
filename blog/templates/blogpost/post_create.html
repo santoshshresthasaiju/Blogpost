@@ -1,16 +1,35 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
+
+{% block title %}Create Post{% endblock %}
+
 {% block blogpost %}
   
-<div class="row justify-content-center">
-    <div class="col-md-4">
-        <h2 class="text-center">Create Post</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ post_form|crispy }}
-            <button type="submit" class="btn btn-primary w-100 mt-3">Create</button>
-        </form>
+<div class="row justify-content-center py-5">
+    <div class="col-lg-6 col-md-8 col-sm-10">
+        <div class="card shadow-lg border-0">
+            <div class="card-body p-4">
+                <h2 class="text-center mb-4">Create Post</h2>
+                <form method="post" autocomplete="off" class="post-form">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="id_title" class="form-label">Title:</label>
+                        <input type="text" class="form-control" name="title" id="id_title" placeholder="Enter title" value="{{ post_form.title.value|default_if_none:'' }}">
+                        <div class="form-error">{{ post_form.title.errors }}</div>
+                    </div>
+            
+                    <div class="mb-3">
+                        <label for="id_content" class="form-label">Content:</label>
+                        <textarea name="content" class="form-control" id="id_content" placeholder="Enter content" rows="5">{{ post_form.content.value|default_if_none:'' }}</textarea>
+                        <div class="text-danger">{{ post_form.content.errors }}</div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">Create Post</button>                
+                </form>
+            </div>
+        </div>
     </div>
 </div>
+
 
 {% endblock blogpost %}

@@ -9,7 +9,17 @@
 </form>
 <div class="container mt-4">
     <h2 class="text-center">Blog Posts</h2>
-
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                {% if message.tags == "success" %}
+                    <div class="alert alert-success" id="message-alert">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
     <!-- Post List -->
     {% if posts %}
         <div class="row">
@@ -29,12 +39,18 @@
                 {% if posts.has_previous %}
                     <li class="page-item">
                         <a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M5.707 1.5a1 1 0 0 0-1.414 0l-4 4a1 1 0 0 0 0 1.414l4 4a1 1 0 0 0 1.414-1.414L3.414 7H15a1 1 0 1 0 0-2H3.414l2.293-2.293a1 1 0 0 0 0-1.414z"/>
+                            </svg>
                         </a>
                     </li>
                 {% else %}
                     <li class="page-item disabled">
-                        <span class="page-link">&laquo;</span>
+                        <span class="page-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M5.707 1.5a1 1 0 0 0-1.414 0l-4 4a1 1 0 0 0 0 1.414l4 4a1 1 0 0 0 1.414-1.414L3.414 7H15a1 1 0 1 0 0-2H3.414l2.293-2.293a1 1 0 0 0 0-1.414z"/>
+                            </svg>
+                        </span>
                     </li>
                 {% endif %}
 
@@ -49,14 +65,21 @@
                 {% if posts.has_next %}
                     <li class="page-item">
                         <a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M10.293 1.5a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L12.586 7H1a1 1 0 1 1 0-2h11.586L10.293 2.914a1 1 0 0 1 0-1.414z"/>
+                            </svg>
                         </a>
                     </li>
                 {% else %}
                     <li class="page-item disabled">
-                        <span class="page-link">&raquo;</span>
+                        <span class="page-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M10.293 1.5a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L12.586 7H1a1 1 0 1 1 0-2h11.586L10.293 2.914a1 1 0 0 1 0-1.414z"/>
+                            </svg>
+                        </span>
                     </li>
                 {% endif %}
+            
             </ul>
         </nav>
 
@@ -65,7 +88,7 @@
     {% endif %}
 
     <div>
-        <a  href="{% url 'blogpost:post_create' %}">Create Post</a>
+        <a href="{% url 'blogpost:post_create' %}">Create Post</a>
     </div>
 </div>
 

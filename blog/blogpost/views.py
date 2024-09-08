@@ -4,6 +4,7 @@ from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
+from django.contrib import messages
 
 @login_required
 def home(request):
@@ -44,6 +45,7 @@ def post_create(request):
             new_post = post_form.save(commit=False)
             new_post.author = request.user
             new_post.save()
+            messages.success(request, 'Post created successfully!')
             return redirect('blogpost:post_list')
     else:
         post_form = PostForm()
@@ -56,6 +58,7 @@ def post_update(request, post_id):
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Post updated successfully!')
             return redirect('blogpost:post_list')
     else:
         form = PostForm(instance=post)
@@ -86,6 +89,7 @@ def post_detail(request, post_id):
 def post_delete(request, post_id):
     post = Post.objects.get(id=post_id)
     post.delete()
+    messages.success(request, 'Post deleted successfully!')
     return redirect('blogpost:post_list')
 
 @login_required
@@ -93,4 +97,5 @@ def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
     if comment.author == request.user:
         comment.delete()
+        messages.success(request, 'Comment deleted successfully!')
         return redirect('blogpost:post_detail', post_id=comment.post.id)

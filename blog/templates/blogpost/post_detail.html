@@ -9,6 +9,18 @@
     <title>{{ post.title }}</title>
 </head>
 <body>
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                {% if message.tags == "success" %}
+                    <div class="alert alert-success" id="message-alert">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    
     <h1>{{ post.title }}</h1>
     <p>{{ post.content|linebreaks }}</p>
     <p>Author: {{ post.author }}</p>
@@ -41,9 +53,13 @@
     <hr>
 
     <h2>Add a Comment</h2>
-    <form action="" method="POST">
+    <form autocomplete="off" method="POST">
         {% csrf_token %}
-        {{ comment_form.as_p }}
+        <div class="mb-3">
+            <label for="id_content" class="form-label"></label>
+            <textarea name="content" class="form-control" id="id_content" placeholder="Enter comment" rows="5">{{ comment_form.content.value|default_if_none:'' }}</textarea>
+            <div class="text-danger">{{ comment_form.content.errors }}</div>
+        </div>
         <button type="submit">Add Comment</button>
     </form>
 
