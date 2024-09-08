@@ -1,7 +1,7 @@
 myenv
-__pycache__
+__pychache__/
 *.pyc
-__pycache__/
+*.pyo
 db.sqlite3
 .env
 staticfiles/
