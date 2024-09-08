@@ -14,12 +14,12 @@
         </div>
     {% endif %}
 </div>
-<div>
-    <h1 class="text-center justify-content-center p-4">Share your voice and vision through a blog that is uniquely yours.</h1>
-    <h4 class="text-center justify-content-between"> Build it with ease and let the world discover your story.</h4> 
-    <div>
-        <button class="bg-"> <a href="{% url 'blogpost:post_create' %}">CREATE YOUR BLOG</a></button>
-    </div>
+<div class="container d-flex justify-content-end bg-image text-center">
+    <div class="align-content-center">
+        <h1 class="display-4 text-white fw-bold mb-3">Share Your Voice and Vision</h1>
+        <h4 class="lead text-white mb-4">Build your blog with ease and let the world discover your story.</h4>
+        <a href="{% url 'blogpost:post_create' %}" class="btn btn-primary btn-lg">Create Your Blog</a>
+    </div>  
 </div>
 
 {% endblock home %}

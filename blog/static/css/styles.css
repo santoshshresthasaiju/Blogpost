@@ -1,0 +1,21 @@
+body {
+    background-color: rgba(41, 132, 171, 0.795);
+}
+
+.navbar {
+    background-color: rgb(3, 80, 103);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+.bg-image {
+    background-image: url('/static/assets/bgpic.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 800px;
+}

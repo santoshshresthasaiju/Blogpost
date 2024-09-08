@@ -1,0 +1,46 @@
+/* Custom Alert Styles */
+.custom-alert {
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Post Header Styles */
+.custom-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.custom-content {
+    font-size: 1.125rem;
+    line-height: 1.6;
+}
+
+/* Comments Section Styles */
+.custom-subtitle {
+    font-size: 1.75rem;
+    font-weight: bold;
+}
+
+.custom-card {
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+/* Add Comment Form Styles */
+.custom-label {
+    font-weight: bold;
+}
+
+.custom-textarea {
+    border-radius: 0.5rem;
+    border: 1px solid #ced4da;
+}
+
+.custom-textarea:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+}

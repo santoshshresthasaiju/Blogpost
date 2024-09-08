@@ -3,7 +3,8 @@
 {% block title %}Create Post{% endblock %}
 
 {% block blogpost %}
-  
+
+<!-- creating post -->
 <div class="row justify-content-center py-5">
     <div class="col-lg-6 col-md-8 col-sm-10">
         <div class="card shadow-lg border-0">
@@ -14,13 +15,13 @@
                     
                     <div class="mb-3">
                         <label for="id_title" class="form-label">Title:</label>
-                        <input type="text" class="form-control" name="title" id="id_title" placeholder="Enter title" value="{{ post_form.title.value|default_if_none:'' }}">
-                        <div class="form-error">{{ post_form.title.errors }}</div>
+                        <input type="text" class="form-control" name="title" placeholder="Enter title" value="{{ post_form.title.value|default_if_none:'' }}">
+                        <div class="form-error text-danger">{{ post_form.title.errors }}</div>
                     </div>
             
                     <div class="mb-3">
                         <label for="id_content" class="form-label">Content:</label>
-                        <textarea name="content" class="form-control" id="id_content" placeholder="Enter content" rows="5">{{ post_form.content.value|default_if_none:'' }}</textarea>
+                        <textarea name="content" class="form-control" placeholder="Enter content" rows="5">{{ post_form.content.value|default_if_none:'' }}</textarea>
                         <div class="text-danger">{{ post_form.content.errors }}</div>
                     </div>
                     
@@ -30,6 +31,5 @@
         </div>
     </div>
 </div>
-
 
 {% endblock blogpost %}

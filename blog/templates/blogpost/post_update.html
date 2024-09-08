@@ -1,14 +1,15 @@
-{% extends "base.html" %}
-{% load crispy_forms_tags %}
+{% extends "base.html" %} 
+{% load crispy_forms_tags %} 
+{% block title %}Update Post{% endblock %} 
 
 {% block blogpost %}
-<h2>Update Post: {{ post.title }}</h2>
+<h2 class="text-white">Update Post: {{ post.title }}</h2>
 
 <form method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button type="submit">Update Post</button>
+  {% csrf_token %} {{ form|crispy }}
+  <button type="submit" class="btn btn-primary">Update Post</button>
 </form>
-
-<p><a href="{% url 'blogpost:post_detail' post.pk %}">Cancel</a></p> 
+<br>
+<br>
+<a href="{% url 'blogpost:post_detail' post.pk %}" class="btn btn-danger">Cancel</a>
 {% endblock blogpost %}
