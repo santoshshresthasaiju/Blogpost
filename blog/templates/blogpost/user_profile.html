@@ -1,32 +1,21 @@
 {% extends "base.html" %}
-{% block title %}Post list{% endblock title %}
+{% block title %}{{ user.username }}'s Profile{% endblock title %}
 {% block blogpost %}
 <div class="container justify-content-center align-items-center mt-5 pt-5">
-    <h1 class="text-center text-white fw-bold mb-4">Contents</h1>
-    <!-- success messages -->
-    {% if messages %}
-        <div class="mb-4">
-            {% for message in messages %}
-                {% if message.tags == "success" %}
-                    <div class="alert alert-success alert-dismissible fade show" role="alert" id="message-alert">
-                        {{ message }}
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-    {% endif %}
+    <h1 class="text-center text-white fw-bold mb-1">{{ user.username }}'s Profile</h1>
+    <h2 class="text-center text-white mb-4">Posts by {{ user.username }}</h2>
 
     <!-- Post List -->
-    {% if posts %}
+    {% if posts_list %}
         <div class="row row-cols-1 gap-4 w-auto">
-            {% for post in posts %}
+            {% for post in posts_list %}
                 <div class="col">
                     <div class="card w-auto h-auto">
                         <div class="card-body">
                             <h5 class="card-title">{{ post.title }}</h5>
                             <h6 class="card-subtitle mb-4">By {{ post.author.username }} | {{ post.timestamp|date:"F j, Y, g:i a" }}</h6>
-                            <p class="card-text">{{ post.content|linebreaks|truncatewords:100 }}</p>
-                            <a href="{% url 'blogpost:post_detail' post.pk %}" class="btn btn-primary">Read More</a>
+                            <p class="card-text lead custom-content">{{ post.content|linebreaks|truncatewords:100 }}</p>
+                            <a href="{% url 'blogpost:post_detail' post.pk %}" class="btn btn-primary">Read More..</a>
                         </div>
                     </div>
                 </div>
@@ -35,7 +24,7 @@
         <!-- Pagination Controls -->
         <nav aria-label="Page navigation" class="pt-5">
             <ul class="pagination justify-content-center">
-                {% if posts.has_previous %}
+                {% if posts_list.has_previous %}
                     <li class="page-item">
                         <a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
@@ -53,15 +42,15 @@
                     </li>
                 {% endif %}
 
-                {% for num in posts.paginator.page_range %}
-                    {% if posts.number == num %}
+                {% for num in posts_list.paginator.page_range %}
+                    {% if posts_list.number == num %}
                         <li class="page-item active"><span class="page-link">{{ num }}</span></li>
                     {% else %}
                         <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
                     {% endif %}
                 {% endfor %}
 
-                {% if posts.has_next %}
+                {% if posts_list.has_next %}
                     <li class="page-item">
                         <a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
@@ -84,10 +73,7 @@
     {% else %}
         <p class="text-center">No posts available.</p>
     {% endif %}
-
-    <div class="text-center py-5">
-        <a href="{% url 'blogpost:post_create' %}" class="btn btn-primary">Create Post</a>
-    </div>
+    
 </div>
 
 {% endblock blogpost %}

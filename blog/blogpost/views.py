@@ -7,6 +7,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.contrib import messages
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 # views for home page
 @login_required
@@ -20,7 +21,7 @@ def post_list(request):
     posts = Post.objects.filter(
         Q(title__icontains=query) | Q(content__icontains=query), 
         author=request.user
-    ) if query else Post.objects.select_related('author').prefetch_related('comments').all()
+    ) if query else Post.objects.select_related('author').prefetch_related('comments').all().order_by('-timestamp')
 
     # Pagination with dynamic adjustment of posts per page
     posts_per_page = request.GET.get('posts_per_page', 4)  # Default to 4
@@ -111,3 +112,21 @@ def delete_comment(request, comment_id):
     comment.delete()
     messages.success(request, 'Comment deleted successfully!')
     return redirect(reverse('blogpost:post_detail', args=[comment.post.id]))
+
+# views for user profile 
+@login_required
+def user_profile(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    posts_list = Post.objects.select_related('author').prefetch_related('comments').filter(author=user).order_by('-timestamp')
+    posts_per_page = request.GET.get('posts_per_page', 5)
+    paginator = Paginator(posts_list, posts_per_page)
+    page_number = request.GET.get('page')
+    
+    try:
+        posts_list = paginator.page(page_number)
+    except PageNotAnInteger:
+        posts_list = paginator.page(1)
+    except EmptyPage:
+        posts_list = paginator.page(paginator.num_pages)
+        
+    return render(request, 'blogpost/user_profile.html', {'user': user, 'posts_list': posts_list})
