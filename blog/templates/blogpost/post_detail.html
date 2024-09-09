@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Post Details{% endblock %}
 {% block blogpost %}
-<div class="container pt-4">
-    <!-- Success Messages -->
+
+<div class="container justify-content-center align-items-center mt-5 pt-5">
+    <!--Messages -->
     {% if messages %}
         <div class="alert alert-success alert-dismissible fade show custom-alert" role="alert" id="message-alert">
             {% for message in messages %}
@@ -14,6 +15,7 @@
     <!-- Blog Post Title and Content -->
     <div class="post-header mb-4">
         <h1 class="mb-3 custom-title text-white">{{ post.title }}</h1>
+        <hr>
         <p class="lead custom-content">{{ post.content|linebreaks }}</p>
         <p class="text-white mb-3">Author: {{ post.author }}</p>
         <!-- Comments Section -->
@@ -28,12 +30,7 @@
                                 <footer class="blockquote-footer mb-2">
                                     By: {{ comment.author }} on {{ comment.timestamp }}
                                 </footer>
-                                {% if comment.author == request.user %}
-                                    <form action="{% url 'blogpost:delete_comment' comment.id %}" method="POST" class="d-inline">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    </form>
-                                {% endif %}
+                                <a href="{% url 'blogpost:delete_comment' comment.id %}" class="btn btn-danger">Delete</a>
                             </div>
                         </div>
                     </li>
@@ -42,7 +39,7 @@
                 {% endfor %}
             </ul>
         </div>
-
+        <!-- User authenticated for the update and delete -->
         {% if user == post.author %}
             <div class="btn-group" role="group">
                 <a href="{% url 'blogpost:post_update' post.id %}" class="btn btn-primary">Update</a>

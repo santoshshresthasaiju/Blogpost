@@ -3,13 +3,18 @@
 {% block title %}Update Post{% endblock %} 
 
 {% block blogpost %}
-<h2 class="text-white">Update Post: {{ post.title }}</h2>
+<!-- post update sections -->
+<div class="container pt-5 mt-5">
+  <h2 class="text-white mb-4">Update Post: {{ post.title }}</h2>
 
-<form method="post">
-  {% csrf_token %} {{ form|crispy }}
-  <button type="submit" class="btn btn-primary">Update Post</button>
-</form>
-<br>
-<br>
-<a href="{% url 'blogpost:post_detail' post.pk %}" class="btn btn-danger">Cancel</a>
+  <form method="post" class="bg-light p-4 rounded shadow-sm">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Update Post</button>
+  </form>
+  
+  <div class="mt-3 d-flex justify-content-center align-items-center pb-4">
+    <a href="{% url 'blogpost:post_detail' post.pk %}" class="btn btn-danger">Cancel</a>
+  </div>
+</div>
 {% endblock blogpost %}

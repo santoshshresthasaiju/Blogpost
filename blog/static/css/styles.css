@@ -2,6 +2,9 @@ body {
     background-color: rgba(41, 132, 171, 0.795);
 }
 
+.footer-content {
+    background-color: rgb(3, 80, 103);
+}
 .navbar {
     background-color: rgb(3, 80, 103);
     color: #fff;
@@ -17,9 +20,12 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 800px;
 }
 
 .text-color {
     color: bisque;
+}
+
+.txt-col {
+    color: rgb(0, 204, 255);
 }
