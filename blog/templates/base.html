@@ -69,9 +69,9 @@
                 <button class="btn btn-outline-success text-white"  type="submit">Search</button>
             </div>
           </form>
-          <div class="nav-link px-3">
-            <a class="nav-link text-white" href="{% url 'blogpost:user_profile' user.id %}"><i class="fa-regular fa-user"></i>Profile</a></li>
-          </div>
+          <span class="d-inline-block rounded-circle p-2">
+            <a class="nav-link text-white" href="{% url 'blogpost:user_profile' user.id %}"><i class="fa-regular fa-user"></i> {{ user.username }}</a>
+          </span>
         {% endif %}
       </div>
     </div>

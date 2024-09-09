@@ -19,8 +19,7 @@ def home(request):
 def post_list(request):
     query = request.GET.get('q', '')
     posts = Post.objects.filter(
-        Q(title__icontains=query) | Q(content__icontains=query), 
-        author=request.user
+        Q(title__icontains=query) | Q(content__icontains=query)
     ) if query else Post.objects.select_related('author').prefetch_related('comments').all().order_by('-timestamp')
 
     # Pagination with dynamic adjustment of posts per page
@@ -118,7 +117,7 @@ def delete_comment(request, comment_id):
 def user_profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
     posts_list = Post.objects.select_related('author').prefetch_related('comments').filter(author=user).order_by('-timestamp')
-    posts_per_page = request.GET.get('posts_per_page', 5)
+    posts_per_page = request.GET.get('posts_per_page', 6)
     paginator = Paginator(posts_list, posts_per_page)
     page_number = request.GET.get('page')
     
