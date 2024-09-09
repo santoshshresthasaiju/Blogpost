@@ -1,3 +1,4 @@
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
@@ -6,9 +7,11 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.contrib import messages
 
+# views for home page
 @login_required
 def home(request):
     return render(request, 'blogpost/home.html')
+
 
 @login_required
 def post_list(request):
@@ -20,9 +23,7 @@ def post_list(request):
                 author=request.user
             )
         else:
-            
-        #fetch data by using filter for according to user posts from database
-            posts = Post.objects.filter(author=request.user)
+            posts = Post.objects.all()
     else:
         posts =Post.objects.none()
     #using pagination
@@ -54,6 +55,10 @@ def post_create(request):
 @login_required
 def post_update(request, post_id):
     post = Post.objects.get(id=post_id) 
+    
+    if request.user != post.author:
+        return HttpResponseForbidden("You are not allowed to update this post.")
+    
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
@@ -88,6 +93,10 @@ def post_detail(request, post_id):
 @login_required
 def post_delete(request, post_id):
     post = Post.objects.get(id=post_id)
+    
+    if request.user != post.author:
+        return HttpResponseForbidden("You are not allowed to delete this post.")
+    
     post.delete()
     messages.success(request, 'Post deleted successfully!')
     return redirect('blogpost:post_list')
@@ -95,6 +104,10 @@ def post_delete(request, post_id):
 @login_required
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
+    
+    if request.user != comment.author:
+        return HttpResponseForbidden("You are not allowed to delete this post.")
+    
     if comment.author == request.user:
         comment.delete()
         messages.success(request, 'Comment deleted successfully!')

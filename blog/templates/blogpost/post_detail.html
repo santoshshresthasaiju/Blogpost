@@ -42,10 +42,14 @@
                 {% endfor %}
             </ul>
         </div>
-        <div class="btn-group" role="group">
-            <a href="{% url 'blogpost:post_update' post.id %}" class="btn btn-primary">Update</a>
-            <a href="{% url 'blogpost:post_delete' post.id %}" class="btn btn-danger">Delete</a>
-        </div>
+
+        {% if user == post.author %}
+            <div class="btn-group" role="group">
+                <a href="{% url 'blogpost:post_update' post.id %}" class="btn btn-primary">Update</a>
+                <a href="{% url 'blogpost:post_delete' post.id %}" class="btn btn-danger">Delete</a>
+            </div>
+        {% endif %}
+
     </div>
 
     <hr>
