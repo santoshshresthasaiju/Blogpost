@@ -77,10 +77,12 @@
         </nav>
 
     {% else %}
-        <div class="alert alert-warning text-center">
-            <h5>No posts available.</h5>
-            <p>{{ user.username }} hasn't published any posts yet.</p>
-        </div>
+        <div class="container py-5">
+            <div class="alert alert-warning text-center py-5">
+                <h5>No posts available.</h5>
+                <p>{{ user.username }} hasn't published any posts yet.</p>
+            </div>
+        </div>    
     {% endif %}
 
 </div>

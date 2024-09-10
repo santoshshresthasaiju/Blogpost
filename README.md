@@ -30,3 +30,13 @@ Once `pip` has finished downloading all the dependencies:
 (env)$ python manage.py runserver
 ```
 And navigate to `http://127.0.0.1:8000/`.
+
+## Key Features
+1. Post Management: Create, view, comment on posts.
+2. User Authentication: Secure login and registration.
+3. Forms: Django ModelForms for post/comment creation.
+4. Templates: Responsive Bootstrap 5 templates.
+5. Pagination: For post lists.
+6. Messages Framework: Success/failure notifications.
+7. Search: Filter posts by title/content.
+8. User Profiles: Display user posts on profile pages.
